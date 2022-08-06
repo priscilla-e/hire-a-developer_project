@@ -14,6 +14,7 @@ const router = createRouter({
     { path: '/developers', component: DevelopersList },
     {
       path: '/developers/:id',
+      props: true,
       component: DeveloperDetails,
       children: [{ path: 'send-offer', component: SendOffer }],
     },

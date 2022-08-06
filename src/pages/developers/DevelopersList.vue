@@ -1,5 +1,7 @@
 <template>
-  <section>Filter Section</section>
+  <base-card>
+    <section>Filter Section</section>
+  </base-card>
   <base-card>
     <section>
       <div class="controls">
