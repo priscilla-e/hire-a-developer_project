@@ -1,22 +1,25 @@
 <template>
   <section>Filter Section</section>
-  <section>
-    <div>
-      <button>Refresh</button>
-      <router-link to="/register">Register as a Developer</router-link>
-    </div>
-  </section>
-  <ul v-if="hasDevelopers">
-    <developer-item
-      v-for="dev in filteredDevelopers"
-      :key="dev.id"
-      :id="dev.id"
-      :first-name="dev.firstName"
-      :last-name="dev.lastName"
-      :rate="dev.hourlyRate"
-      :areas="dev.areas"
-    ></developer-item>
-  </ul>
+  <base-card>
+    <section>
+      <div class="controls">
+        <base-button mode="outline">Refresh</base-button>
+        <base-button isLink to="/register">Register as a Developer</base-button>
+      </div>
+    </section>
+    <ul v-if="hasDevelopers">
+      <developer-item
+        v-for="dev in filteredDevelopers"
+        :key="dev.id"
+        :id="dev.id"
+        :first-name="dev.firstName"
+        :last-name="dev.lastName"
+        :rate="dev.hourlyRate"
+        :areas="dev.areas"
+      ></developer-item>
+    </ul>
+    <h3 id="no-data" v-else>No developers listed yet.</h3>
+  </base-card>
 </template>
 
 <style>
@@ -29,6 +32,11 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+#no-data {
+  text-align: center;
+  margin: 4rem 0;
 }
 </style>
 

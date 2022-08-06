@@ -1,19 +1,28 @@
 <template>
   <li>
     <h3>{{ fullName }}</h3>
-    <h4>£{{ rate }} p/h</h4>
+    <h4>£{{ rate }}/hour</h4>
     <div>
-      <span v-for="area in areas" :key="area"> {{ area }}</span>
+      <base-badge
+        v-for="area in areas"
+        :key="area"
+        :text="area"
+        :type="area"
+      ></base-badge>
     </div>
     <div class="actions">
-      <router-link :to="viewProfileLink">View Profile</router-link>
-      <router-link :to="sendOfferLink">Send an offer</router-link>
+      <base-button isLink mode="outline" :to="viewProfileLink"
+        >View Profile</base-button
+      >
+      <base-button isLink :to="sendOfferLink">Send an Offer</base-button>
     </div>
   </li>
 </template>
 
 <script>
+import BaseBadge from '../ui/BaseBadge.vue';
 export default {
+  components: { BaseBadge },
   props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
   computed: {
     fullName() {
@@ -23,7 +32,7 @@ export default {
       return this.$route.path + '/' + this.id;
     },
     sendOfferLink() {
-      return this.$route.path + '/' + this.id + '/send-offer'
+      return this.$route.path + '/' + this.id + '/send-offer';
     },
   },
 };
@@ -50,8 +59,6 @@ h3 {
 h4 {
   color: rgb(39, 178, 67);
 }
-
-
 
 div {
   margin: 0.5rem 0;
