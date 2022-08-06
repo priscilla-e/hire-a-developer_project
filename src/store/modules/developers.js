@@ -1,5 +1,5 @@
 export default {
-  namespace: true,
+  namespaced: true,
   state() {
     return {
       developers: [
@@ -8,6 +8,7 @@ export default {
           firstName: 'Priscilla',
           lastName: 'Emasoga',
           location: 'Sheffield, United Kingdom',
+          areas: ['front-end', 'ux/ui', 'graphics design'],
           description: 'Hello i am a developer feel free to send me a message',
           hourlyRate: 30,
         },
@@ -16,6 +17,7 @@ export default {
           firstName: 'Pamela',
           lastName: 'Johnson',
           location: 'Manchester, United Kingdom',
+          areas: ['front-end', 'ux/ui', 'graphics design'],
           description: 'Hello i am a developer feel free to send me a message',
           hourlyRate: 25,
         },
@@ -24,6 +26,7 @@ export default {
           firstName: 'Joane',
           lastName: 'Doe',
           location: 'London, United Kingdom',
+          areas: ['front-end', 'ux/ui', 'graphics design'],
           description: 'Hello i am a developer feel free to send me a message',
           hourlyRate: 21,
         },

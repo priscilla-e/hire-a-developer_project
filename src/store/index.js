@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 
-import developersModule from './modules/developers.js';
+import developersModule from './modules/developers.js'
 import offersModule from './modules/offers.js';
 
 const store = createStore({
