@@ -1,12 +1,10 @@
 <template>
-  <base-card>
-    <section>Filter Section</section>
-  </base-card>
+  <developer-filter @change-filter="setFilters"></developer-filter>
   <base-card>
     <section>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button isLink to="/register">Register as a Developer</base-button>
+        <base-button isLink :to="'/register'">Register as a Developer</base-button>
       </div>
     </section>
     <ul v-if="hasDevelopers">
@@ -44,17 +42,45 @@ ul {
 
 <script>
 import DeveloperItem from '../../components/developers/DeveloperItem.vue';
+import DeveloperFilter from '../../components/developers/DeveloperFilter.vue';
 
 export default {
   components: {
     DeveloperItem,
+    DeveloperFilter,
+  },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        graphics: true,
+      },
+    };
   },
   computed: {
     filteredDevelopers() {
-      return this.$store.getters['developers/developers'];
+      const developers = this.$store.getters['developers/developers'];
+      return developers.filter((dev) => {
+        if (this.activeFilters.frontend && dev.areas.includes('frontend')) {
+          return true;
+        }
+        if (this.activeFilters.backend && dev.areas.includes('backend')) {
+          return true;
+        }
+        if (this.activeFilters.graphics && dev.areas.includes('graphics')) {
+          return true;
+        }
+        return false;
+      });
     },
     hasDevelopers() {
       return this.$store.getters['developers/hasDevelopers'];
+    },
+  },
+  methods: {
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
     },
   },
 };

@@ -20,6 +20,7 @@
   <section>
     <base-card>
       <h3>Interested? Send {{ selectedDeveloper.firstName }} an offer now!</h3>
+      <p> My hourly rate is <strong>£{{rate}}</strong>.</p>
       <base-button isLink :to="sendOfferLink">Send an Offer</base-button>
       <router-view></router-view>
     </base-card>
