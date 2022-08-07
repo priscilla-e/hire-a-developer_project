@@ -1,6 +1,6 @@
 <template>
   <base-card>
-    <h2>Find your Developer</h2>
+    <h2>Find Your Developer</h2>
     <span class="filter-options">
       <input type="checkbox" id="frontend" checked @change="setFilter" />
       <label for="frontend">Frontend</label>

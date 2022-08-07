@@ -4,7 +4,7 @@
     <section>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button isLink :to="'/register'">Register as a Developer</base-button>
+        <base-button isLink :to="'/register'" v-if="!isDeveloper">Register as a Developer</base-button>
       </div>
     </section>
     <ul v-if="hasDevelopers">
@@ -77,6 +77,9 @@ export default {
     hasDevelopers() {
       return this.$store.getters['developers/hasDevelopers'];
     },
+    isDeveloper() {
+      return this.$store.getters['developers/isDeveloper']
+    }
   },
   methods: {
     setFilters(updatedFilters) {
