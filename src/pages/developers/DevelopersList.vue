@@ -3,10 +3,17 @@
   <base-card>
     <section>
       <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
-        <base-button isLink :to="'/register'" v-if="!isDeveloper">Register as a Developer</base-button>
+        <base-button mode="outline" @click="loadDevelopers"
+          >Refresh</base-button
+        >
+        <base-button isLink :to="'/register'" v-if="!isDeveloper"
+          >Register as a Developer</base-button
+        >
       </div>
     </section>
+    <!-- <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div> -->
     <ul v-if="hasDevelopers">
       <developer-item
         v-for="dev in filteredDevelopers"
@@ -52,6 +59,7 @@ export default {
   data() {
     return {
       activeFilters: {
+        isLoading: false,
         frontend: true,
         backend: true,
         graphics: true,
@@ -78,13 +86,23 @@ export default {
       return this.$store.getters['developers/hasDevelopers'];
     },
     isDeveloper() {
-      return this.$store.getters['developers/isDeveloper']
-    }
+      return this.$store.getters['developers/isDeveloper'];
+    },
   },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
+    async loadDevelopers() {
+      this.isLoading = true;
+      await this.$store.dispatch('developers/loadDevelopers');
+      this.isLoading = false;
+      console.log('isloading: ' + this.isLoading);
+      console.log('hasDevelopers: ' + this.hasDevelopers);
+    },
+  },
+  created() {
+    this.loadDevelopers();
   },
 };
 </script>

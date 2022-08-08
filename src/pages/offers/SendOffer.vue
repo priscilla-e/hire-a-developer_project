@@ -63,8 +63,8 @@ export default {
       }
       const formData = {
         devId: this.$route.params.id,
-        email: this.email,
-        message: this.message,
+        email: this.email.val,
+        message: this.message.val,
       };
       this.$store.dispatch('offers/sendOffer', formData);
       this.$router.push('/developers');

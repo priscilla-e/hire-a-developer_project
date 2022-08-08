@@ -5,7 +5,15 @@ export default {
       offers: [],
     };
   },
-  getters: {},
+  getters: {
+    offers(state, _, _2, rootGetters) {
+      const devId = rootGetters.userId;
+      return state.offers.filter(offer => offer.devId === devId)
+    },
+    hasOffers(_, getters) {
+      return getters.offers && getters.offers.length > 0;
+    }
+  },
   mutations: {
     addOffer(state, payload) {
       state.offers.push(payload);
@@ -21,7 +29,6 @@ export default {
         message: data.message,
       };
       context.commit('addOffer', newOffer);
-      console.log(newOffer);
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
   <section>
     <base-card>
-      <h2 class="centered">{{ fullName }}</h2>
       <figure>
         <img :src="profilePictureLink" alt="profile picture" />
       </figure>
+      <h2 class="centered">{{ fullName }}</h2>
       <div class="areas">
         <base-badge
           v-for="area in areas"
@@ -20,7 +20,10 @@
   <section>
     <base-card>
       <h3>Interested? Send {{ selectedDeveloper.firstName }} an offer now!</h3>
-      <p> My hourly rate is <strong>£{{rate}}</strong>.</p>
+      <p>
+        My hourly rate is <strong>£{{ rate }}</strong
+        >.
+      </p>
       <base-button isLink :to="sendOfferLink">Send an Offer</base-button>
       <router-view></router-view>
     </base-card>
