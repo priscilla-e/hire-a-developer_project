@@ -1,4 +1,7 @@
 <template>
+<base-dialog :show="!!error" title="An error occured!" @close="closeErrorDialog">
+  <p> {{ error }}</p>
+</base-dialog>
   <developer-filter @change-filter="setFilters"></developer-filter>
   <base-card>
     <section>
@@ -6,15 +9,15 @@
         <base-button mode="outline" @click="loadDevelopers"
           >Refresh</base-button
         >
-        <base-button isLink :to="'/register'" v-if="!isDeveloper"
+        <base-button isLink :to="'/register'" v-if="!isDeveloper && !isLoading"
           >Register as a Developer</base-button
         >
       </div>
     </section>
-    <!-- <div v-if="isLoading">
+    <div v-if="isLoading">
       <base-spinner></base-spinner>
-    </div> -->
-    <ul v-if="hasDevelopers">
+    </div>
+    <ul v-else-if="!isLoading && hasDevelopers">
       <developer-item
         v-for="dev in filteredDevelopers"
         :key="dev.id"
@@ -58,8 +61,9 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
-        isLoading: false,
         frontend: true,
         backend: true,
         graphics: true,
@@ -95,11 +99,16 @@ export default {
     },
     async loadDevelopers() {
       this.isLoading = true;
-      await this.$store.dispatch('developers/loadDevelopers');
+      try {
+        await this.$store.dispatch('developers/loadDevelopers');
+      } catch (error) {
+        this.error = error.message || 'We hit a snag! Try again later.'
+      }
       this.isLoading = false;
-      console.log('isloading: ' + this.isLoading);
-      console.log('hasDevelopers: ' + this.hasDevelopers);
     },
+    closeErrorDialog() {
+      this.error = false;
+    }
   },
   created() {
     this.loadDevelopers();

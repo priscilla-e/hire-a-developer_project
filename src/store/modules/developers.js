@@ -64,9 +64,10 @@ export default {
       const responseData = await response.json();
 
       if (!response.ok) {
-        // eror ...
+        const error = new Error(responseData.message || 'Failed to load data!');
+        throw error;
       }
-      
+
       const developers = [];
       for (const key in responseData) {
         const developer = {
