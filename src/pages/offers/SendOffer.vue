@@ -1,4 +1,9 @@
 <template>
+  <base-dialog
+    :show="!!error"
+    title="An error occured!"
+    @close="closeErrorDialog"
+  ></base-dialog>
   <form @submit.prevent="submitForm">
     <div class="form-control" :class="{ errors: !email.isValid }">
       <label for="email">Your E-mail</label>

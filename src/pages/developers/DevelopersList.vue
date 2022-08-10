@@ -6,7 +6,7 @@
   <base-card>
     <section>
       <div class="controls">
-        <base-button mode="outline" @click="loadDevelopers"
+        <base-button mode="outline" @click="loadDevelopers(true)"
           >Refresh</base-button
         >
         <base-button isLink :to="'/register'" v-if="!isDeveloper && !isLoading"
@@ -97,10 +97,10 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadDevelopers() {
+    async loadDevelopers(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('developers/loadDevelopers');
+        await this.$store.dispatch('developers/loadDevelopers', {forceFetch: refresh});
       } catch (error) {
         this.error = error.message || 'We hit a snag! Try again later.'
       }

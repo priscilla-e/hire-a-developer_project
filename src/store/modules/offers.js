@@ -18,17 +18,55 @@ export default {
     addOffer(state, payload) {
       state.offers.push(payload);
     },
+    setOffers(state, payload) {
+      state.offers = payload;
+    }
   },
   actions: {
-    sendOffer(context, data) {
-      const { v4: uuidv4 } = require('uuid');
+    async sendOffer(context, payload) {
       const newOffer = {
-        id: uuidv4(),
-        devId: data.devId,
-        email: data.email,
-        message: data.message,
+        email: payload.email,
+        message: payload.message,
       };
+      const response = await fetch(`https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/offers/${payload.devId}.json`, {
+        method: 'POST',
+        body: JSON.stringify(newOffer)
+      })
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to send offer.');
+        throw error;
+      }
+
+      newOffer.id = responseData.name;      // using firebase id as offer id
+      newOffer.devId = responseData.name;
+
       context.commit('addOffer', newOffer);
     },
+    async fetchOffers(context) {
+      // fetches offers for active developer
+      const devId = context.rootGetters.userId;
+      const response = await fetch(`https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/offers/${devId}.json`);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch offers. Contact Administrator');
+        throw error;
+      }
+
+      const offers = [];
+      for (const key in responseData) {
+        const offer = {
+          id: key,
+          devId: devId,
+          email: responseData[key].email,
+          message: responseData[key].message,
+        }
+        offers.push(offer);
+      }
+      context.commit('setOffers', offers);
+    }
   },
 };

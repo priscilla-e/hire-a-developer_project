@@ -2,9 +2,12 @@
   <section>
     <base-card>
       <header>
-        <h2> Offers Received</h2>
+        <h2>Offers Received</h2>
       </header>
-      <ul v-if="hasOffers">
+      <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+      <ul v-else-if="hasOffers && !isLoading">
         <offers-item
           v-for="offer in receivedOffers"
           :key="offer.id"
@@ -22,6 +25,12 @@
 import OffersItem from '../../components/offers/OffersItem.vue';
 
 export default {
+  data() {
+    return {
+      isLoading: false,
+      error: null,
+    };
+  },
   components: {
     OffersItem,
   },
@@ -33,6 +42,23 @@ export default {
       return this.$store.getters['offers/hasOffers'];
     },
   },
+  methods: {
+    async loadOffers() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('offers/fetchOffers');
+      } catch (error) {
+        this.error = error.message || 'Something is not right, contact Admin.';
+      }
+      this.isLoading = false;
+    },
+    closeErrorDialog() {
+      this.error = false;
+    },
+  },
+  created() {
+    this.loadOffers();
+  }
 };
 </script>
 

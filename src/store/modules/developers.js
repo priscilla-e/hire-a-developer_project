@@ -2,6 +2,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      lastFetchedTimestamp: null,
       developers: [],
     };
   },
@@ -17,8 +18,22 @@ export default {
       const userId = rootGetters.userId;
       return developers.some((dev) => dev.id === userId);
     },
+    shouldUpdate(state) {
+      // restrict data fetch time to every 1 min
+      const lastFetch = state.lastFetchedTimestamp;
+
+      if (!lastFetch) {
+        return true;
+      }
+
+      const currentTimestamp = new Date().getTime();
+      return (currentTimestamp - lastFetch) / 1000 > 60;
+    }
   },
   mutations: {
+    setFetchTimestamp(state) {
+      state.lastFetchedTimestamp = new Date().getTime();
+    },
     addDeveloper(state, payload) {
       state.developers.push(payload);
     },
@@ -56,7 +71,10 @@ export default {
         id: userId,
       });
     },
-    async loadDevelopers(context) {
+    async loadDevelopers(context, payload) {
+      if (!payload.forceFetch && !context.getters.shouldUpdate) {
+        return;
+      }
       // load developers from database
       const response = await fetch(
         `https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/developers.json`
@@ -82,6 +100,7 @@ export default {
         developers.push(developer);
       }
       context.commit('setDevelopers', developers);
+      context.commit('setFetchTimestamp');
     },
   },
 };
