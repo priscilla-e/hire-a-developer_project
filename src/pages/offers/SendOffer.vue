@@ -1,34 +1,36 @@
 <template>
-  <base-dialog
-    :show="!!error"
-    title="An error occured!"
-    @close="closeErrorDialog"
-  ></base-dialog>
-  <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{ errors: !email.isValid }">
-      <label for="email">Your E-mail</label>
-      <input
-        type="email"
-        id="email"
-        v-model.trim="email.val"
-        @blur="clearValidity('email')"
-      />
-      <p v-if="!email.isValid">Email is a required field.</p>
-    </div>
-    <div class="form-control" :class="{ errors: !message.isValid }">
-      <label for="message">Message</label>
-      <textarea
-        id="message"
-        rows="5"
-        v-model.trim="message.val"
-        @blur="clearValidity('message')"
-      ></textarea>
-      <p v-if="!message.isValid">Message is a required field.</p>
-    </div>
-    <div class="actions">
-      <base-button>Send Offer</base-button>
-    </div>
-  </form>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occured!"
+      @close="closeErrorDialog"
+    ></base-dialog>
+    <form @submit.prevent="submitForm">
+      <div class="form-control" :class="{ errors: !email.isValid }">
+        <label for="email">Your E-mail</label>
+        <input
+          type="email"
+          id="email"
+          v-model.trim="email.val"
+          @blur="clearValidity('email')"
+        />
+        <p v-if="!email.isValid">Email is a required field.</p>
+      </div>
+      <div class="form-control" :class="{ errors: !message.isValid }">
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          rows="5"
+          v-model.trim="message.val"
+          @blur="clearValidity('message')"
+        ></textarea>
+        <p v-if="!message.isValid">Message is a required field.</p>
+      </div>
+      <div class="actions">
+        <base-button>Send Offer</base-button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>

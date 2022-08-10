@@ -1,33 +1,37 @@
 <template>
-  <section>
-    <base-card>
-      <figure>
-        <img :src="profilePictureLink" alt="profile picture" />
-      </figure>
-      <h2 class="centered">{{ fullName }}</h2>
-      <div class="areas">
-        <base-badge
-          v-for="area in areas"
-          :key="area"
-          :text="area"
-          :type="area"
-        ></base-badge>
-      </div>
-      <li>{{ description }}</li>
-    </base-card>
-  </section>
+  <div>
+    <section>
+      <base-card>
+        <figure>
+          <img :src="profilePictureLink" alt="profile picture" />
+        </figure>
+        <h2 class="centered">{{ fullName }}</h2>
+        <div class="areas">
+          <base-badge
+            v-for="area in areas"
+            :key="area"
+            :text="area"
+            :type="area"
+          ></base-badge>
+        </div>
+        <li>{{ description }}</li>
+      </base-card>
+    </section>
 
-  <section>
-    <base-card>
-      <h3>Interested? Send {{ selectedDeveloper.firstName }} an offer now!</h3>
-      <p>
-        My hourly rate is <strong>£{{ rate }}</strong
-        >.
-      </p>
-      <base-button isLink :to="sendOfferLink">Send an Offer</base-button>
-      <router-view></router-view>
-    </base-card>
-  </section>
+    <section>
+      <base-card>
+        <h3>
+          Interested? Send {{ selectedDeveloper.firstName }} an offer now!
+        </h3>
+        <p>
+          My hourly rate is <strong>£{{ rate }}</strong
+          >.
+        </p>
+        <base-button isLink :to="sendOfferLink">Send an Offer</base-button>
+        <router-view></router-view>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>

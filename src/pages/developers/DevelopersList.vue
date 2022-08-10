@@ -1,35 +1,44 @@
 <template>
-<base-dialog :show="!!error" title="An error occured!" @close="closeErrorDialog">
-  <p> {{ error }}</p>
-</base-dialog>
-  <developer-filter @change-filter="setFilters"></developer-filter>
-  <base-card>
-    <section>
-      <div class="controls">
-        <base-button mode="outline" @click="loadDevelopers(true)"
-          >Refresh</base-button
-        >
-        <base-button isLink :to="'/register'" v-if="!isDeveloper && !isLoading"
-          >Register as a Developer</base-button
-        >
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occured!"
+      @close="closeErrorDialog"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
+    <developer-filter @change-filter="setFilters"></developer-filter>
+    <base-card>
+      <section>
+        <div class="controls">
+          <base-button mode="outline" @click="loadDevelopers(true)"
+            >Refresh</base-button
+          >
+          <base-button
+            isLink
+            :to="'/register'"
+            v-if="!isDeveloper && !isLoading"
+            >Register as a Developer</base-button
+          >
+        </div>
+      </section>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
       </div>
-    </section>
-    <div v-if="isLoading">
-      <base-spinner></base-spinner>
-    </div>
-    <ul v-else-if="!isLoading && hasDevelopers">
-      <developer-item
-        v-for="dev in filteredDevelopers"
-        :key="dev.id"
-        :id="dev.id"
-        :first-name="dev.firstName"
-        :last-name="dev.lastName"
-        :rate="dev.hourlyRate"
-        :areas="dev.areas"
-      ></developer-item>
-    </ul>
-    <h3 id="no-data" v-else>No developers listed yet.</h3>
-  </base-card>
+      <ul v-else-if="!isLoading && hasDevelopers">
+        <developer-item
+          v-for="dev in filteredDevelopers"
+          :key="dev.id"
+          :id="dev.id"
+          :first-name="dev.firstName"
+          :last-name="dev.lastName"
+          :rate="dev.hourlyRate"
+          :areas="dev.areas"
+        ></developer-item>
+      </ul>
+      <h3 id="no-data" v-else>No developers listed yet.</h3>
+    </base-card>
+  </div>
 </template>
 
 <style>
@@ -100,15 +109,17 @@ export default {
     async loadDevelopers(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('developers/loadDevelopers', {forceFetch: refresh});
+        await this.$store.dispatch('developers/loadDevelopers', {
+          forceFetch: refresh,
+        });
       } catch (error) {
-        this.error = error.message || 'We hit a snag! Try again later.'
+        this.error = error.message || 'We hit a snag! Try again later.';
       }
       this.isLoading = false;
     },
     closeErrorDialog() {
       this.error = false;
-    }
+    },
   },
   created() {
     this.loadDevelopers();
