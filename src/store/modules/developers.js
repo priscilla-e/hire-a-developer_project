@@ -75,7 +75,6 @@ export default {
       if (!payload.forceFetch && !context.getters.shouldUpdate) {
         return;
       }
-      // load developers from database
       const response = await fetch(
         `https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/developers.json`
       );

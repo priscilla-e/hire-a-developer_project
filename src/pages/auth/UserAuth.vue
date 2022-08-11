@@ -1,19 +1,79 @@
 <template>
   <base-card>
-    <form>
+    <form @submit.prevent="submitForm">
       <div class="form-control">
         <label for="email">Email</label>
-        <input type="email" id="email" />
+        <input type="email" id="email" v-model.trim="email" />
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input type="password" id="email" />
+        <input type="password" id="email" v-model.trim="password" />
       </div>
-      <base-button>Login</base-button>
-      <base-button type="button" mode="flat">Sign up instead</base-button>
+      <p v-if="!detailsAreValid">Please enter a valid email and password</p>
+      <base-button> {{ submitButtonCaption }}</base-button>
+      <base-button type="button" mode="flat" @click="switchMode">
+        {{ switchModeCaption }}</base-button
+      >
     </form>
   </base-card>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      mode: 'login',
+      detailsAreValid: true,
+    };
+  },
+  computed: {
+    submitButtonCaption() {
+      if (this.mode === 'login') {
+        return 'Login';
+      } else {
+        return 'Sign Up';
+      }
+    },
+    switchModeCaption() {
+      if (this.mode === 'login') {
+        return 'Sign up instead';
+      } else {
+        return 'Login instead';
+      }
+    },
+  },
+  methods: {
+    submitForm() {
+      if (
+        this.email === '' ||
+        !this.email.includes('@') ||
+        this.password.length < 6
+      ) {
+        this.detailsAreValid = false;
+        return;
+      }
+
+      if (this.mode === 'login') {
+        //...login
+      } else {
+        this.$store.dispatch('signup', {
+          email: this.email,
+          password: this.password,
+        });
+      }
+    },
+    switchMode() {
+      if (this.mode === 'login') {
+        this.mode = 'signup';
+      } else {
+        this.mode = 'login';
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 form {
