@@ -17,7 +17,6 @@
         <li>{{ description }}</li>
       </base-card>
     </section>
-
     <section>
       <base-card>
         <h3>
@@ -49,6 +48,7 @@ export default {
       );
     },
     profilePictureLink() {
+      console.log(this.selectedDeveloper.profilePicture);
       return this.selectedDeveloper.profilePicture;
     },
     areas() {
@@ -64,10 +64,11 @@ export default {
       return this.$route.path + '/send-offer';
     },
   },
-  created() {
+  async created() {
     this.selectedDeveloper = this.$store.getters['developers/developers'].find(
       (dev) => dev.id === this.id
     );
+    console.log(this.$store.getters['developers/developers'])
   },
 };
 </script>

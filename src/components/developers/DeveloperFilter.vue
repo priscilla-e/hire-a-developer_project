@@ -1,19 +1,21 @@
 <template>
-  <base-card>
-    <h2>Find Your Developer</h2>
-    <span class="filter-options">
-      <input type="checkbox" id="frontend" checked @change="setFilter" />
-      <label for="frontend">Frontend</label>
-    </span>
-    <span class="filter-options">
-      <input type="checkbox" id="backend" checked @change="setFilter" />
-      <label for="backend">Backend</label>
-    </span>
-    <span class="filter-options">
-      <input type="checkbox" id="graphics" checked @change="setFilter" />
-      <label for="graphics">Graphics</label>
-    </span>
-  </base-card>
+  <section>
+    <base-card>
+      <h2>Find Your Developer</h2>
+      <span class="filter-options">
+        <input type="checkbox" id="frontend" checked @change="setFilter" />
+        <label for="frontend">Frontend</label>
+      </span>
+      <span class="filter-options">
+        <input type="checkbox" id="backend" checked @change="setFilter" />
+        <label for="backend">Backend</label>
+      </span>
+      <span class="filter-options">
+        <input type="checkbox" id="graphics" checked @change="setFilter" />
+        <label for="graphics">Graphics</label>
+      </span>
+    </base-card>
+  </section>
 </template>
 
 <script>
@@ -45,6 +47,6 @@ export default {
 
 <style scoped>
 .filter-options {
-margin-right: 1rem;
+  margin-right: 1rem;
 }
 </style>

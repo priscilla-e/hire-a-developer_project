@@ -6,6 +6,7 @@ import DeveloperRegistration from './pages/developers/DeveloperRegistration';
 import ReceivedOffers from './pages/offers/ReceivedOffers.vue';
 import SendOffer from './pages/offers/SendOffer.vue';
 import NotFound from './pages/NotFound.vue'
+import UserAuth from './pages/auth/UserAuth.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +21,7 @@ const router = createRouter({
     },
     { path: '/register', component: DeveloperRegistration },
     { path: '/offers', component: ReceivedOffers },
+    { path: '/auth', component: UserAuth },
     { path: '/:notFound(.*)', component: NotFound },
   ],
 });
