@@ -4,10 +4,9 @@
       <h1><router-link to="/">Hire a Developer</router-link></h1>
       <ul>
         <li><router-link to="/developers">All Developers</router-link></li>
-        <li>
-          <router-link to="/offers" v-if="isAuth">Offers</router-link>
-          <router-link to="/auth" v-else>Register/Login</router-link>
-        </li>
+        <li  v-if="isAuth"><router-link to="/offers">Offers</router-link></li>
+        <li v-else><router-link to="/auth">Register/Login</router-link></li>
+        <li v-if="isAuth"><base-button @click="logout"> Log out </base-button></li>
       </ul>
     </nav>
   </header>
@@ -18,9 +17,14 @@ export default {
   computed: {
     isAuth() {
       return this.$store.getters.isAuth;
-    },
+    }
   },
-};
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+    }
+  }
+}
 </script>
 
 <style scoped>
