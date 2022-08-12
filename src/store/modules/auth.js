@@ -11,6 +11,9 @@ export default {
     userId(state) {
       return state.userId;
     },
+    token(state) {
+      return state.token;
+    }
   },
   mutations: {
     setUser(state, payload) {
@@ -30,7 +33,29 @@ export default {
         })
       });
 
-      const responseData = response.json();
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to authenticate');
+        throw error;
+      }
+
+      context.commit('setUser', {
+        token: responseData.idToken,
+        userId: responseData.localId,
+        tokenExpiration: responseData.expiresIn
+      })
+    },
+    async login(context, payload) {
+      const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAWuCGlVQzjpZf98SjUBvoz6ROkK6hH - w0', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true
+        })
+      });
+      const responseData = await response.json();
 
       if (!response.ok) {
         const error = new Error(responseData.message || 'Failed to authenticate');
@@ -43,5 +68,6 @@ export default {
         tokenExpiration: responseData.expiresIn
       })
     }
-  }
+  },
+
 }

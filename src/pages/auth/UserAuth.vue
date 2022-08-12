@@ -18,7 +18,7 @@
         </div>
         <div class="form-control">
           <label for="password">Password</label>
-          <input type="password" id="email" v-model.trim="password" />
+          <input type="password" id="password" v-model.trim="password" />
         </div>
         <p v-if="!detailsAreValid">Please enter a valid email and password</p>
         <base-button> {{ submitButtonCaption }}</base-button>
@@ -59,7 +59,7 @@ export default {
     },
   },
   methods: {
-    async nsubmitForm() {
+    async submitForm() {
       if (
         this.email === '' ||
         !this.email.includes('@') ||
@@ -71,14 +71,16 @@ export default {
 
       this.isLoading = true;
 
+      const payload = {
+        email: this.email,
+        password: this.password,
+      };
+
       try {
         if (this.mode === 'login') {
-          //...login
+          await this.$store.dispatch('login', payload);
         } else {
-          await this.$store.dispatch('signup', {
-            email: this.email,
-            password: this.password,
-          });
+          await this.$store.dispatch('signup', payload);
         }
       } catch (error) {
         this.error = error.message || 'Failed to authenticate.. Try again';
@@ -94,7 +96,7 @@ export default {
       }
     },
     closeErrorDialog() {
-      this.isLoading = false;
+      this.error = null;
     },
   },
 };

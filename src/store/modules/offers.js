@@ -28,6 +28,7 @@ export default {
         email: payload.email,
         message: payload.message,
       };
+      
       const response = await fetch(`https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/offers/${payload.devId}.json`, {
         method: 'POST',
         body: JSON.stringify(newOffer)
@@ -48,7 +49,8 @@ export default {
     async fetchOffers(context) {
       // fetches offers for active developer
       const devId = context.rootGetters.userId;
-      const response = await fetch(`https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/offers/${devId}.json`);
+      const token = context.rootGetters.token;
+      const response = await fetch(`https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/offers/${devId}.json?auth=` + token);
       const responseData = await response.json();
 
       if (!response.ok) {

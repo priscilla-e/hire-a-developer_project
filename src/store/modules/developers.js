@@ -54,8 +54,9 @@ export default {
         areas: data.areas,
       };
 
+      const token = context.rootGetters.token;
       const response = await fetch(
-        `https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/developers/${userId}.json`,
+        `https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/developers/${userId}.json?auth=` + token,
         {
           method: 'PUT',
           body: JSON.stringify(userData),
@@ -75,6 +76,7 @@ export default {
       if (!payload.forceFetch && !context.getters.shouldUpdate) {
         return;
       }
+
       const response = await fetch(
         `https://hire-a-dev-a1cb2-default-rtdb.firebaseio.com/developers.json`
       );
