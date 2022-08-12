@@ -17,7 +17,7 @@
           <base-button
             isLink
             :to="'/register'"
-            v-if="!isDeveloper && !isLoading"
+            v-if="isAuth && !isDeveloper && !isLoading"
             >Register as a Developer</base-button
           >
         </div>
@@ -101,6 +101,9 @@ export default {
     isDeveloper() {
       return this.$store.getters['developers/isDeveloper'];
     },
+    isAuth() {
+      return this.$store.getters.isAuth;
+    }
   },
   methods: {
     setFilters(updatedFilters) {

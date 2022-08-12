@@ -1,6 +1,5 @@
 export default {
   state() {
-    // const { v4: uuidv4 } = require('uuid');
     return {
       userId: null,
       token: null,
@@ -13,6 +12,9 @@ export default {
     },
     token(state) {
       return state.token;
+    },
+    isAuth(state) {
+      return !!state.token;
     }
   },
   mutations: {

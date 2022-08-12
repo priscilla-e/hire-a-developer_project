@@ -4,11 +4,24 @@
       <h1><router-link to="/">Hire a Developer</router-link></h1>
       <ul>
         <li><router-link to="/developers">All Developers</router-link></li>
-        <li><router-link to="/offers">Offers</router-link></li>
+        <li>
+          <router-link to="/offers" v-if="isAuth">Offers</router-link>
+          <router-link to="/auth" v-else>Register/Login</router-link>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+export default {
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth;
+    },
+  },
+};
+</script>
 
 <style scoped>
 header {
