@@ -79,6 +79,7 @@ export default {
       try {
         if (this.mode === 'login') {
           await this.$store.dispatch('login', payload);
+          this.$router.replace('/developers');
         } else {
           await this.$store.dispatch('signup', payload);
         }
