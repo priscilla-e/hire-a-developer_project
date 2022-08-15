@@ -79,10 +79,10 @@ export default {
       try {
         if (this.mode === 'login') {
           await this.$store.dispatch('login', payload);
-          this.$router.replace('/developers');
         } else {
           await this.$store.dispatch('signup', payload);
         }
+        this.$router.replace('/developers');
       } catch (error) {
         this.error = error.message || 'Failed to authenticate.. Try again';
       }
