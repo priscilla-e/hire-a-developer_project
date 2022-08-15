@@ -14,6 +14,19 @@ export default {
   components: {
     TheHeader,
   },
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    },
+  },
+  watch: {
+    didAutoLogout(current, old) {
+      if (current && current != old) {
+        console.log('replacing route...')
+        this.$router.replace('/developers');
+      }
+    },
+  },
   created() {
     this.$store.dispatch('autoLogin');
   },
