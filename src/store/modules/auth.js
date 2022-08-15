@@ -56,9 +56,7 @@ export default {
         throw error;
       }
 
-      // const tokenExpiresIn = +responseData.expiresIn * 1000;
-
-      const tokenExpiresIn = 5000;
+      const tokenExpiresIn = +responseData.expiresIn * 1000;
       const futureTokenExpiration = new Date().getTime() + tokenExpiresIn;
 
       localStorage.setItem('token', responseData.idToken);
