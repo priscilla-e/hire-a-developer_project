@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import DeveloperDetails from './pages/developers/DeveloperDetails.vue';
-import DevelopersList from './pages/developers/DevelopersList.vue';
-import DeveloperRegistration from './pages/developers/DeveloperRegistration';
-import ReceivedOffers from './pages/offers/ReceivedOffers.vue';
-import SendOffer from './pages/offers/SendOffer.vue';
-import NotFound from './pages/NotFound.vue';
-import UserAuth from './pages/auth/UserAuth.vue';
+const DeveloperDetails = () => import('./pages/developers/DeveloperDetails.vue');
+const DevelopersList = () => import('./pages/developers/DevelopersList.vue');
+const DeveloperRegistration = () => import('./pages/developers/DeveloperRegistration');
+const ReceivedOffers = () => import('./pages/offers/ReceivedOffers.vue');
+const SendOffer = () => import('./pages/offers/SendOffer.vue');
+const NotFound = () => import('./pages/NotFound.vue');
+const UserAuth = () => import('./pages/auth/UserAuth.vue');
 import store from './store/index.js';
 
 
